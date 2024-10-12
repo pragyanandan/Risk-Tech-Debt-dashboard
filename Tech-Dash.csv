@@ -1,0 +1,60 @@
+Key,Summary,Primary-Team,FY-25,FY-26,FY-27,FY-28,FY-29,Risk-Impact,Risk-Likelihood,risk-exposure-score,IP-Platform-Scope,MSI_Covered _Yes_No
+TTRD-566,Consolidate - Video Platforms - BrightCove/Mediakind,Digital-Squads,500000.0,500000.0,,,,3,3,9.0,Yes,Yes
+TTRD-561,Play out & distribution processing [Snell/Axon/Cerebrum],Broadcast & Media,,750000.0,600000.0,,,3,4,12.0,MayBe,Yes
+TTRD-560,Studio and NTC - Snell/Axon/Cerebrum] Processing,Broadcast & Media,,750000.0,600000.0,,,3,4,12.0,No,No
+TTRD-315,Media Book SQL Server Upgrade,Application & Support,,,,,,4,4,16.0,No,No
+TTRD-314,Vfire Upgrade,Application & Support,,,,,,4,4,16.0,MayBe,Yes
+TTRD-309,Observability across endpoints,Digital-Squads,,60000.0,,,,4,3,12.0,MayBe,Yes
+TTRD-308,CTV Framework Upgrade,Digital-Squads,1200000.0,,,,,5,5,25.0,Yes,Yes
+TTRD-306,Commission Website & Enterprise CMS,Digital-Squads,30000.0,,,,,4,4,16.0,No,No
+TTRD-301,DTT/DTH Transmission Headend Encoders,Broadcast & Media,350000.0,,,,,4,4,16.0,Yes,Yes
+TTRD-300,FY25-FY29 Hardware Lifecycle - BASS,Broadcast & Media,131000.0,175000.0,125000.0,125000.0,125000.0,4,3,12.0,MayBe,Yes
+TTRD-299,Auckland NCA Camera Fleet ,Broadcast & Media,350000.0,100000.0,,,,4,4,16.0,Adjacent,No
+TTRD-296,FY25-FY29 Hardware Lifecycle refresh - EUC,Application & Support,1009000.0,,,,,5,2,10.0,Yes,Yes
+TTRD-295,News DR Cloud Edit System,Broadcast & Media,50000.0,,,,,5,2,10.0,MayBe,No
+TTRD-276,WGN DR Enterprise App migration to Cloud,Infrastructure,,160000.0,,,,3,3,9.0,MayBe,Yes
+TTRD-272,FY25-FY29 - Cyber Security Initiatives,Infrastructure,438000.0,913633.0,438000.0,438000.0,438000.0,5,4,20.0,Yes,Yes
+TTRD-271,Enterprise wide integration platform,Digital-Squads,,300000.0,80000.0,,,4,3,12.0,MayBe,Yes
+TTRD-261,Play API Microservices,Digital-Squads,500000.0,500000.0,,,,5,4,20.0,Yes,Yes
+TTRD-159,DB Upgrade for unsupported SQL servers( EOS),Digital-Squads,,200000.0,,,,5,4,20.0,No,No
+TTRD-158,Activate Upgrade,Infrastructure,80000.0,,,,,3,3,9.0,MayBe,Yes
+TTRD-157,EDR (AntiVirus) Software Managed Service,Infrastructure,531202.0,,,,,4,3,12.0,MayBe,Yes
+TTRD-156,SAN (storage area network) Switch replacement,Infrastructure,185000.0,,,,,3,3,9.0,Yes,Yes
+TTRD-155,Windows Desktop SOE Upgrade,Infrastructure,65000.0,,,,,3,3,9.0,Yes,Yes
+TTRD-154,MS Exchange Hybrid Server Upgrade/Re-platform,Infrastructure,,120000.0,,,,3,3,9.0,MayBe,No
+TTRD-153,Citrix Software Upgrade,Infrastructure,,50000.0,,,,3,3,9.0,Yes,Yes
+TTRD-152,Backup Software Upgrade,Infrastructure,,70000.0,,,,3,3,9.0,Yes,Yes
+TTRD-150,Viz Hardware replacement (IP),Infrastructure,47500.0,49000.0,,,,4,3,12.0,Yes,No
+TTRD-149,FY26 Server Hardware Lifecycle,Infrastructure,,80000.0,,,,3,3,9.0,Yes,Yes
+TTRD-148,FY25-FY29 Hardware Lifecycle - Infra & Networks,Infrastructure,286000.0,558921.0,330210.0,184000.0,535000.0,4,3,12.0,MayBe,Yes
+TTRD-129,Broadcast Network Firewalls replacement (IP Platform),Infrastructure,400000.0,,,,,4,4,16.0,Yes,Yes
+TTRD-123,ScheduALL - Replacement as current system EOS,Application & Support,200000.0,,,,,4,4,16.0,MayBe,No
+TTRD-119,Dealnet - Strategical Solution,DE & Analytics,50000.0,,,,,3,3,9.0,No,No
+TTRD-118,OS Upgrade and Server virtualisation,Infrastructure,,150000.0,,150000.0,,4,3,12.0,Yes,Yes
+TTRD-115,Car Park application solution,Application & Support,,10000.0,,,,2,3,6.0,No,No
+TTRD-109,Network Perimeter Firewalls (IP Platform),Infrastructure,810000.0,,,,,4,4,16.0,Yes,Yes
+TTRD-106,AVID - 8 Airspeeds (Live Record/Replay) ,Broadcast & Media,1300000.0,,,,,4,3,12.0,MayBe,No
+TTRD-103,Distribution Router (SDI) (IP),Broadcast & Media,,,50000.0,,,5,3,15.0,Yes,No
+TTRD-102,Oracle DB - Viz one / MAM Inc upgrade,Broadcast & Media,,250000.0,,,,5,3,15.0,Yes,No
+TTRD-98,Studio 3 audio Mixer - Calrec,Broadcast & Media,,,,1200000.0,1200000.0,3,2,6.0,Adjacent,No
+TTRD-97,Studio 4 Audio Mixer - Calrec,Broadcast & Media,,,,1200000.0,1200000.0,3,2,6.0,Adjacent,No
+TTRD-96,Upgrade TVC Signal Pulse Generators (SPGs),Broadcast & Media,,200000.0,,,,2,1,2.0,Yes,No
+TTRD-95,PDC Multiviews - Miranda Kaleido Replacement ,Broadcast & Media,,400000.0,,,,4,4,16.0,Yes,Yes
+TTRD-93,Transcode replacement (IP),Broadcast & Media,,250000.0,,,,3,4,12.0,Yes,Yes
+TTRD-92,"Transmission Router - Cygnus TV1,2 & Duke ",Broadcast & Media,,1500000.0,50000.0,50000.0,50000.0,5,3,15.0,Yes,No
+TTRD-91,Studio Screen Technology (Studio 4),Broadcast & Media,,1300000.0,40000.0,,,4,3,12.0,Adjacent,No
+TTRD-90,Exterity IPTV (in house TV Monitoring),Broadcast & Media,,50000.0,5000.0,5000.0,5000.0,3,3,9.0,Adjacent,No
+TTRD-86,Auckland main playout and Automation,Broadcast & Media,,1250000.0,,,,5,4,20.0,Yes,Yes
+TTRD-84,Production router - Evertz,Broadcast & Media,,,,1500000.0,1500000.0,2,2,4.0,No,No
+TTRD-83,Channel DR( Disaster Recovery) WGN Playout,Broadcast & Media,,200000.0,20000.0,20000.0,20000.0,3,4,12.0,MayBe,Yes
+TTRD-81,FITS replacement ,Broadcast & Media,,40000.0,,,,4,4,16.0,Yes,Yes
+TTRD-79,Atrium / Foyer/ TV / LED Screen systems ,Broadcast & Media,,300000.0,,,,2,3,6.0,No,No
+TTRD-75,studio 1 overall technical rebuild,Broadcast & Media,,750000.0,,,,3,3,9.0,Adjacent,No
+TTRD-74,Wellington News infrastructure,Broadcast & Media,,750000.0,,,,3,3,9.0,Adjacent,No
+TTRD-73,South Island news infrastructure,Broadcast & Media,,,750000.0,,,3,3,9.0,Adjacent,No
+TTRD-72,"Studio 1, 3 & 4 Control Room rebuilds",Broadcast & Media,,1000000.0,1000000.0,500000.0,500000.0,3,2,6.0,Adjacent,No
+TTRD-70,Studio 4 soft set Videowall + Black Storms - 3yr TCO,Broadcast & Media,,540000.0,,,,3,5,15.0,Adjacent,No
+TTRD-47,Studio 4 Robotics Camera replacement ,Broadcast & Media,,1900000.0,,,,4,4,16.0,Adjacent,No
+TTRD-46,Calrec Audio over IP,Broadcast & Media,,,,,,2,1,2.0,No,No
+TTRD-40,Auth0 - Technical strategy,Digital-Squads,,,,,,4,4,16.0,MayBe,Yes
+TTRD-25,Server Patching - Vulnerability Mgmt,Infrastructure,,160000.0,,,,4,3,12.0,MayBe,Yes

@@ -1,6 +1,109 @@
 import streamlit as st
 import pandas as pd
 import plotly.graph_objs as go
+import os
+import csv
+import pandas as pd
+from jira import JIRA
+
+def fetch_jira_issues_and_create_csv(jira_server, jira_email, jira_api_token, filter_name="Prags-technology-Tech-Debt"):
+    """
+    Fetch issues from Jira using the specified filter, write the data to a CSV file, 
+    and return the data as a Pandas DataFrame.
+    
+    Parameters:
+    - jira_server: Jira server URL
+    - jira_email: Jira user email for authentication
+    - jira_api_token: Jira API token for authentication
+    - filter_name: Name of the Jira filter to fetch issues (default is "Prags-technology-Tech-Debt")
+    
+    Returns:
+    - DataFrame containing the fetched Jira issues
+    """
+    # Initialize Jira client
+    jira = JIRA(server=jira_server, basic_auth=(jira_email, jira_api_token))
+
+    try:
+        # Get all favorite filters for the authenticated user
+        all_filters = jira.favourite_filters()
+
+        # Search for the filter by name
+        target_filter = next((f for f in all_filters if f.name == filter_name), None)
+
+        if target_filter:
+            print(f"Filter '{filter_name}' found with ID: {target_filter.id}")
+            
+            # Fetch issues using the specified filter
+            issues = jira.search_issues(f'filter={target_filter.id}', maxResults=100)
+
+            # Define the column headers and field mapping for the CSV file
+            columns = [
+                "Key", "Summary", "Primary-Team", "FY-25", "FY-26", "FY-27", "FY-28", "FY-29",
+                "Risk-Impact", "Risk-Likelihood", "risk-exposure-score", "IP-Platform-Scope", "MSI_Covered _Yes_No"
+            ]
+
+            # Create a list of dictionaries to hold the issue data
+            data = []
+            for issue in issues:
+                # Create a row dictionary for each issue using custom fields
+                row = {
+                    "Key": issue.key,
+                    "Summary": issue.fields.summary,
+                    "Primary-Team": getattr(issue.fields, 'customfield_14208', "N/A"),
+                    "FY-25": getattr(issue.fields, 'customfield_14215', "N/A"),
+                    "FY-26": getattr(issue.fields, 'customfield_14216', "N/A"),
+                    "FY-27": getattr(issue.fields, 'customfield_14217', "N/A"),
+                    "FY-28": getattr(issue.fields, 'customfield_14218', "N/A"),
+                    "FY-29": getattr(issue.fields, 'customfield_14353', "N/A"),
+                    "Risk-Impact": getattr(issue.fields, 'customfield_14225', 0),
+                    "Risk-Likelihood": getattr(issue.fields, 'customfield_14224', 0),
+                    "risk-exposure-score": getattr(issue.fields, 'customfield_14226', 0),
+                    "IP-Platform-Scope": getattr(issue.fields, 'customfield_14212', "N/A"),
+                    "MSI_Covered _Yes_No": getattr(issue.fields, 'customfield_14354', "No")
+                }
+                # Append the row to the data list
+                data.append(row)
+
+            # Convert data to a DataFrame
+            df = pd.DataFrame(data)
+
+            # Specify the CSV file name
+            csv_filename = "Tech-Dash.csv"
+
+            # Check if the file already exists and notify the user
+            if os.path.isfile(csv_filename):
+                print(f"The file '{csv_filename}' already exists and will be overwritten.")
+            else:
+                print(f"Creating a new file: {csv_filename}")
+
+            # Write the data to a CSV file with headers (overwrites if the file already exists)
+            df.to_csv(csv_filename, index=False)
+
+            print(f"Data successfully written to {csv_filename}")
+
+            return df  # Return the data as a DataFrame
+        else:
+            print(f"Filter '{filter_name}' not found.")
+            return None
+
+    except Exception as e:
+        print(f"An error occurred: {str(e)}")
+        return None
+
+def load_data(jira_server, jira_email,jira_api_token, fetch_jira):
+    file_path = "Tech-Dash.csv"
+    if fetch_jira or not os.path.exists(file_path):
+        # Try fetching from Jira if fetch_jira is True or if CSV does not exist
+        df = fetch_jira_issues_and_create_csv(jira_server, jira_email, jira_api_token)
+        if df is not None:
+            return df
+        else:
+            st.error("Jira fetch failed and no local file found.")
+            return None
+    else:
+        # Load from local file if CSV exists
+        return pd.read_csv(file_path)
+
 
 # Page configuration to start in wide/full-screen layout
 st.set_page_config(layout="wide")
@@ -21,16 +124,35 @@ st.markdown(
     unsafe_allow_html=True
 )
 
-# Load the data
-file_path = "Test-Dash.csv"
-df = pd.read_csv(file_path)
-
+# Function to preprocess data and calculate risk exposure
 # Function to preprocess data and calculate risk exposure
 def preprocess_data(df):
+    #print("Processing data - in preprocess")
+
+    # Define a helper function to safely extract numerical values from CustomFieldOption
+    def get_numeric_value(field):
+        if isinstance(field, (int, float)):
+            return field  # Return if already a number
+        elif hasattr(field, 'value'):  # Check if it's a CustomFieldOption with a 'value' attribute
+            try:
+                return float(field.value)  # Try to convert the 'value' to a number
+            except ValueError:
+                return 0  # Return 0 if conversion fails
+        return 0  # Default to 0 if it's None or unrecognized
+    
+    # Apply the helper function to extract numerical values from 'Risk-Impact' and 'Risk-Likelihood'
+    df['Risk-Impact'] = df['Risk-Impact'].apply(get_numeric_value)
+    df['Risk-Likelihood'] = df['Risk-Likelihood'].apply(get_numeric_value)
+    
+    # Now that we have numerical values, fill missing values with 0
     df['Risk-Impact'].fillna(0, inplace=True)
     df['Risk-Likelihood'].fillna(0, inplace=True)
+    
+    # Calculate the risk-exposure-score
     df['risk-exposure-score'] = df['Risk-Impact'] * df['Risk-Likelihood']
+    
     return df
+
 
 # Function to generate risk matrix based on likelihood and impact
 def generate_risk_matrix(df):
@@ -53,6 +175,7 @@ def generate_risk_matrix(df):
             
     return risk_matrix
 
+# Function to create a Plotly heatmap with a custom color scale and conditional risk score annotations
 # Function to create a Plotly heatmap with a custom color scale and conditional risk score annotations
 def plot_risk_matrix(risk_matrix, filters, show_scores):
     custom_colorscale = [
@@ -80,7 +203,12 @@ def plot_risk_matrix(risk_matrix, filters, show_scores):
     )
     
     # Create a formatted string of applied filters to show in the title
-    filter_text = "<br>".join([f"<b>{key}:</b> {', '.join(value)}" for key, value in filters.items() if value])
+    def convert_to_string(value):
+        if isinstance(value, list):
+            return [str(v.value if hasattr(v, 'value') else v) for v in value]
+        return str(value.value if hasattr(value, 'value') else value)
+
+    filter_text = "<br>".join([f"<b>{key}:</b> {', '.join(convert_to_string(value))}" for key, value in filters.items() if value])
 
     # Layout and Main Annotations for Summaries
     annotations = [
@@ -113,7 +241,7 @@ def plot_risk_matrix(risk_matrix, filters, show_scores):
 
     layout = go.Layout(
         title={
-            'text': f'TVNZ Tech Debt Risk Dashboard<br><sub>{filter_text}</sub>',
+            'text': f'Tech Debt Risk Dashboard<br><sub>{filter_text}</sub>',
             'y': 0.95,
             'x': 0.5,
             'xanchor': 'center',
@@ -131,42 +259,61 @@ def plot_risk_matrix(risk_matrix, filters, show_scores):
     fig = go.Figure(data=[trace], layout=layout)
     return fig
 
+
 def main():
-    st.title("TVNZ Tech Debt Risk Dashboard")
+    # Jira server URL
+    jira_server = "https://tvnztech.atlassian.net/"
+    jira_email = 'pragya.nandan@tvnz.co.nz'
+    jira_api_token = 'ATATT3xFfGF0K86ekoUk89yqB4IV98qkgJE0u2SpeDYpJ6gddoVuGujcOIhRxtC8kql97jkdDkTFZH8WgQG-ot8xJhHgtqe9RzbiaRynrBr6CYOtmM2JNmvEgj6UOWjWrZwBNFZcPMsM7Gvp5rl7378E75mMH5wO1jmRg2LmpCAcULi0EWBaVOk=DA3B2C7F'
 
-    # Preprocess the data
-    df_processed = preprocess_data(df)
-
-    # Sidebar filters and toggle button for showing risk scores
-    st.sidebar.header("Filters")
-
-    # New Primary-Team filter
-    primary_team_filter = st.sidebar.multiselect("Select Primary Team", options=df_processed['Primary-Team'].unique(), default=df_processed['Primary-Team'].unique())
+    st.sidebar.header("Actions")
     
-    # Existing filters
-    ip_platform_filter = st.sidebar.multiselect("IP Platform Scope?", options=df_processed['IP-Platform-Scope'].unique(), default=df_processed['IP-Platform-Scope'].unique())
-    msi_covered_filter = st.sidebar.multiselect("Is it part of Accenture Business Case?", options=df_processed['MSI_Covered _Yes_No'].unique(), default=df_processed['MSI_Covered _Yes_No'].unique())
+    # Add a refresh button to trigger Jira fetch
+    fetch_jira = st.sidebar.button("Refresh from Jira")
     
-    # Add a checkbox toggle to control risk score display
-    show_scores = st.sidebar.checkbox("Show Risk Scores", value=True)
+    # Call the load_data function, with fetch_jira controlling whether to fetch from Jira or use local data
+    df = load_data(jira_server, jira_email,jira_api_token, fetch_jira=fetch_jira)
 
-    # Apply filters
-    filtered_df = df_processed[
-        (df_processed['Primary-Team'].isin(primary_team_filter)) &
-        (df_processed['IP-Platform-Scope'].isin(ip_platform_filter)) &
-        (df_processed['MSI_Covered _Yes_No'].isin(msi_covered_filter))
-    ]
+    if df is not None:
+        st.title("TVNZ Tech Debt Risk Dashboard")
 
-    # Create a dictionary of applied filters
-    applied_filters = {
-        "Primary Team": primary_team_filter,
-        "IP Platform": ip_platform_filter,
-        "MSI Covered": msi_covered_filter
-    }
+        # Preprocess the data
+        df_processed = preprocess_data(df)
 
-    # Generate and plot the risk matrix for filtered data
-    risk_matrix = generate_risk_matrix(filtered_df)
-    st.plotly_chart(plot_risk_matrix(risk_matrix, applied_filters, show_scores), use_container_width=True)
+        # Sidebar filters and toggle button for showing risk scores
+        st.sidebar.header("Filters")
+
+        # New Primary-Team filter
+        primary_team_filter = st.sidebar.multiselect("Select Primary Team", options=df_processed['Primary-Team'].unique(), default=df_processed['Primary-Team'].unique())
+        
+        # Existing filters
+        ip_platform_filter = st.sidebar.multiselect("IP Platform Scope?", options=df_processed['IP-Platform-Scope'].unique(), default=df_processed['IP-Platform-Scope'].unique())
+        msi_covered_filter = st.sidebar.multiselect("Is it part of Accenture Business Case?", options=df_processed['MSI_Covered _Yes_No'].unique(), default=df_processed['MSI_Covered _Yes_No'].unique())
+        
+        # Add a checkbox toggle to control risk score display
+        show_scores = st.sidebar.checkbox("Show Risk Scores", value=True)
+
+        # Apply filters
+        filtered_df = df_processed[
+            (df_processed['Primary-Team'].isin(primary_team_filter)) &
+            (df_processed['IP-Platform-Scope'].isin(ip_platform_filter)) &
+            (df_processed['MSI_Covered _Yes_No'].isin(msi_covered_filter))
+        ]
+
+        # Create a dictionary of applied filters
+        applied_filters = {
+            "Primary Team": primary_team_filter,
+            "IP Platform": ip_platform_filter,
+            "MSI Covered": msi_covered_filter
+        }
+
+        # Generate and plot the risk matrix for filtered data
+        risk_matrix = generate_risk_matrix(filtered_df)
+        st.plotly_chart(plot_risk_matrix(risk_matrix, applied_filters, show_scores), use_container_width=True)
+    
+    else:
+        st.error("Failed to load data.")
+
 
 if __name__ == "__main__":
     main()

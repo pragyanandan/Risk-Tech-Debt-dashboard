@@ -1,0 +1,7 @@
+streamlit
+pandas
+plotly.graph_objs
+os
+csv
+pandas
+jira
