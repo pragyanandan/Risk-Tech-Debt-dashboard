@@ -262,7 +262,7 @@ def plot_risk_matrix(risk_matrix, filters, show_scores):
 
 def main():
     # Jira server URL
-    jira_server = "https://tvnztech.atlassian.net/"
+    jira_server = "URL/"
     jira_email = 'user email'
     jira_api_token = 'API-Token'
     st.sidebar.header("Actions")
