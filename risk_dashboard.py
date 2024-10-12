@@ -263,9 +263,8 @@ def plot_risk_matrix(risk_matrix, filters, show_scores):
 def main():
     # Jira server URL
     jira_server = "https://tvnztech.atlassian.net/"
-    jira_email = 'pragya.nandan@tvnz.co.nz'
-    jira_api_token = 'ATATT3xFfGF0K86ekoUk89yqB4IV98qkgJE0u2SpeDYpJ6gddoVuGujcOIhRxtC8kql97jkdDkTFZH8WgQG-ot8xJhHgtqe9RzbiaRynrBr6CYOtmM2JNmvEgj6UOWjWrZwBNFZcPMsM7Gvp5rl7378E75mMH5wO1jmRg2LmpCAcULi0EWBaVOk=DA3B2C7F'
-
+    jira_email = 'user email'
+    jira_api_token = 'API-Token'
     st.sidebar.header("Actions")
     
     # Add a refresh button to trigger Jira fetch
