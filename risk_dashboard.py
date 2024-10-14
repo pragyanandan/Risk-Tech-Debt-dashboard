@@ -7,7 +7,7 @@ import pandas as pd
 from jira import JIRA
 
 # Hardcoded valid credentials (for demo purposes; replace with secure handling in production)
-VALID_USERS = {"admin": "password123", "anna": "ststwer!2", "callum": "ststwer!3","mark": "ststwer!4","nicola": "ststwer!5","rob": "ststwer!6", "abbas": "ststwer!7"}
+VALID_USERS = {"admin": "password123", "anna": "ststwer!2", "callum": "ststwer!3","mark": "ststwer!4","nicola": "ststwer!5","rob": "ststwer!6", "abbas": "ststwer!7","denise": "ststwer!8"}
 
 # Function to handle login
 def login(username, password):
