@@ -7,7 +7,7 @@ import pandas as pd
 from jira import JIRA
 
 # Hardcoded valid credentials (for demo purposes; replace with secure handling in production)
-VALID_USERS = {"admin": "password123", "user": "userpass"}
+VALID_USERS = {"admin": "password123", "anna": "ststwer!2", "callum": "ststwer!3","mark": "ststwer!4","nicola": "ststwer!5","rob": "ststwer!6", "abbas": "ststwer!7"}
 
 # Function to handle login
 def login(username, password):
@@ -278,11 +278,134 @@ def plot_risk_matrix(risk_matrix, filters, show_scores):
 
     fig = go.Figure(data=[trace], layout=layout)
     return fig
+def generate_summary_table(df):
+    # Ensure numeric columns are correctly converted to float
+    df[['FY-25', 'FY-26', 'FY-27', 'FY-28', 'FY-29']] = df[['FY-25', 'FY-26', 'FY-27', 'FY-28', 'FY-29']].apply(pd.to_numeric, errors='coerce').fillna(0)
+
+    # Grouping by 'Primary-Team' and summing values for each FY column
+    summary = df.groupby('Primary-Team')[['FY-25', 'FY-26', 'FY-27', 'FY-28', 'FY-29']].sum().reset_index()
+
+    # Adding a "Total of the Row" column by summing each row's fiscal year values
+    summary["Total of the Row"] = summary[['FY-25', 'FY-26', 'FY-27', 'FY-28', 'FY-29']].sum(axis=1)
+
+    # Calculating Grand Totals for each FY and the Total of the Row
+    grand_totals = summary[['FY-25', 'FY-26', 'FY-27', 'FY-28', 'FY-29', 'Total of the Row']].sum()
+    grand_totals_row = pd.DataFrame(
+        [['Grand Total'] + grand_totals.tolist()],
+        columns=['Primary-Team', 'FY-25', 'FY-26', 'FY-27', 'FY-28', 'FY-29', 'Total of the Row']
+    )
+
+    # Concatenating the summary and grand total rows
+    summary_table = pd.concat([summary, grand_totals_row], ignore_index=True)
+
+    # Formatting the values to display them as currency
+    summary_table.iloc[:, 1:] = summary_table.iloc[:, 1:].applymap(lambda x: f"${x:,.0f}" if x else "")
+
+    return summary_table
+
+def render_styled_table(summary_table):
+    # Render the summary table with centered alignment using HTML/CSS
+    st.markdown(
+        """
+        <style>
+        table {
+            width: 100%;
+        }
+        th, td {
+            text-align: center;  /* Center-align all cells */
+        }
+        th:first-child, td:first-child {
+            text-align: left;  /* Left-align the 'Primary Team' column */
+        }
+        </style>
+        """,
+        unsafe_allow_html=True
+    )
+
+    # Use st.markdown with to_html() to render the DataFrame with styling
+    st.markdown(summary_table.to_html(index=False, escape=False), unsafe_allow_html=True)
+
+
+from IPython.display import display
+
+import pandas as pd
+import streamlit as st
+
+import pandas as pd
+import streamlit as st
+
+def generate_detailed_table(df):
+    # Select relevant columns
+    columns = [
+        "Key", "Summary", "FY-25", "FY-26", "FY-27", 
+        "FY-28", "FY-29", "risk-exposure-score", 
+        "IP-Platform-Scope", "MSI_Covered _Yes_No"
+    ]
+
+    # Filter the DataFrame to include only the specified columns
+    detailed_table = df[columns].copy()
+
+    # Fill NaN values with empty strings
+    detailed_table = detailed_table.fillna("")
+
+    # Format FY columns as currency with dollar sign and no decimals
+    for col in ["FY-25", "FY-26", "FY-27", "FY-28", "FY-29"]:
+        detailed_table[col] = detailed_table[col].apply(
+            lambda x: f"${int(x):,}" if isinstance(x, (int, float)) else x
+        )
+
+    # Transform the 'Key' column values into hyperlinks
+    detailed_table["Key"] = detailed_table["Key"].apply(
+        lambda key: f'<a href="https://tvnztech.atlassian.net/browse/{key}" target="_blank">{key}</a>'
+    )
+
+    # Reset index to avoid displaying it
+    detailed_table = detailed_table.reset_index(drop=True)
+
+    # Convert DataFrame to HTML
+    table_html = detailed_table.to_html(escape=False, index=False)
+
+    # Custom CSS to align Summary column to the left
+    st.markdown(
+        """
+        <style>
+        table {
+            border-collapse: collapse;
+            width: 100%;
+        }
+        th {
+            text-align: center;
+            padding: 10px;
+            cursor: pointer;
+        }
+        td {
+            padding: 10px;
+        }
+        td:nth-child(2) {
+            text-align: left !important;  /* Align Summary column to the left */
+        }
+        a {
+            color: #1a73e8;
+            text-decoration: none;
+        }
+        </style>
+        """, 
+        unsafe_allow_html=True
+    )
+
+    # Display the HTML table
+    st.markdown(table_html, unsafe_allow_html=True)
+
+# Example usage:
+# df = pd.read_csv("your_data.csv")
+# generate_detailed_table(df)
+
+
 
 
 def main_dashboard():
     # Jira server URL
-    '''
+   
     jira_server = os.getenv("JIRA_SERVER", "https://default-server-url.com")
     jira_email = os.getenv("JIRA_EMAIL", "default-email@example.com")
     jira_api_token = os.getenv("JIRA_API_TOKEN", "")
@@ -290,6 +413,7 @@ def main_dashboard():
     jira_server = st.secrets["JIRA_SERVER"]
     jira_email = st.secrets["JIRA_EMAIL"]
     jira_api_token = st.secrets["JIRA_API_TOKEN"]
+     '''
 
     st.sidebar.header("Actions")
     
@@ -335,6 +459,17 @@ def main_dashboard():
         # Generate and plot the risk matrix for filtered data
         risk_matrix = generate_risk_matrix(filtered_df)
         st.plotly_chart(plot_risk_matrix(risk_matrix, applied_filters, show_scores), use_container_width=True)
+
+        # Generate and display the summary table
+        st.subheader("Fiancial Summary Table")
+        summary_table = generate_summary_table(filtered_df)
+        #st.table(summary_table)  # Display the summary table
+        render_styled_table(summary_table)  # Use the custom function to render
+
+         # Generate and display the detailed table below the summary table
+        st.subheader("Detailed Table")
+        detailed_table = generate_detailed_table(filtered_df)
+        st.dataframe(detailed_table, use_container_width=True)  # Display with a scrollable dataframe
     
     else:
         st.error("Failed to load data.")
