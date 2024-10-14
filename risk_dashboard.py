@@ -6,6 +6,26 @@ import csv
 import pandas as pd
 from jira import JIRA
 
+# Hardcoded valid credentials (for demo purposes; replace with secure handling in production)
+VALID_USERS = {"admin": "password123", "user": "userpass"}
+
+# Function to handle login
+def login(username, password):
+    if username in VALID_USERS and VALID_USERS[username] == password:
+        st.session_state["authenticated"] = True
+        st.session_state["user"] = username
+        st.success(f"Welcome {username}!")
+    else:
+        st.error("Invalid username or password. Please try again.")
+
+# Login screen
+def login_screen():
+    st.title("Login to Access the Dashboard")
+    username = st.text_input("Username")
+    password = st.text_input("Password", type="password")
+    if st.button("Login"):
+        login(username, password)
+
 def fetch_jira_issues_and_create_csv(jira_server, jira_email, jira_api_token, filter_name="Prags-technology-Tech-Debt"):
     """
     Fetch issues from Jira using the specified filter, write the data to a CSV file, 
@@ -260,11 +280,17 @@ def plot_risk_matrix(risk_matrix, filters, show_scores):
     return fig
 
 
-def main():
+def main_dashboard():
     # Jira server URL
-    jira_server = "URL/"
-    jira_email = 'user email'
-    jira_api_token = 'API-Token'
+    '''
+    jira_server = os.getenv("JIRA_SERVER", "https://default-server-url.com")
+    jira_email = os.getenv("JIRA_EMAIL", "default-email@example.com")
+    jira_api_token = os.getenv("JIRA_API_TOKEN", "")
+    '''
+    jira_server = st.secrets["JIRA_SERVER"]
+    jira_email = st.secrets["JIRA_EMAIL"]
+    jira_api_token = st.secrets["JIRA_API_TOKEN"]
+
     st.sidebar.header("Actions")
     
     # Add a refresh button to trigger Jira fetch
@@ -312,6 +338,21 @@ def main():
     
     else:
         st.error("Failed to load data.")
+
+
+
+# Main function to control login and dashboard
+def main():
+    if "authenticated" not in st.session_state:
+        st.session_state["authenticated"] = False
+
+    if st.session_state["authenticated"]:
+        if st.sidebar.button("Logout"):
+            st.session_state["authenticated"] = False
+        else:
+            main_dashboard()
+    else:
+        login_screen()
 
 
 if __name__ == "__main__":
