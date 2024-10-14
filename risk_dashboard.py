@@ -396,12 +396,6 @@ def generate_detailed_table(df):
     # Display the HTML table
     st.markdown(table_html, unsafe_allow_html=True)
 
-# Example usage:
-# df = pd.read_csv("your_data.csv")
-# generate_detailed_table(df)
-
-
-
 
 def main_dashboard():
     # Jira server URL
