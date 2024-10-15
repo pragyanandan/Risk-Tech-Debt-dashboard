@@ -196,7 +196,6 @@ def generate_risk_matrix(df):
     return risk_matrix
 
 # Function to create a Plotly heatmap with a custom color scale and conditional risk score annotations
-# Function to create a Plotly heatmap with a custom color scale and conditional risk score annotations
 def plot_risk_matrix(risk_matrix, filters, show_scores):
     custom_colorscale = [
         [0.0, 'rgb(0, 128, 0)'],      # Dark Green for low risk
@@ -218,10 +217,12 @@ def plot_risk_matrix(risk_matrix, filters, show_scores):
         colorscale=custom_colorscale,
         showscale=False,
         text=risk_matrix.values,
-        texttemplate='%{text}',
+       # texttemplate='%{text}',
         hoverinfo='text'
     )
-    
+    print("ROCKET")
+    print(risk_matrix.values)
+
     # Create a formatted string of applied filters to show in the title
     def convert_to_string(value):
         if isinstance(value, list):
