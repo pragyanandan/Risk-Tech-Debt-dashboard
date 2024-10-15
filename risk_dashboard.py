@@ -262,7 +262,7 @@ def plot_risk_matrix(risk_matrix, filters, show_scores):
 
     layout = go.Layout(
         title={
-            'text': f'Tech Debt Risk Dashboard<br><sub>{filter_text}</sub>',
+            'text': f'Prags - Tech Debt Risk Dashboard<br><sub>{filter_text}</sub>',
             'y': 0.95,
             'x': 0.5,
             'xanchor': 'center',
