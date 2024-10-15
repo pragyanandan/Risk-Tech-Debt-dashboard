@@ -403,11 +403,6 @@ def main_dashboard():
     jira_server = os.getenv("JIRA_SERVER", "https://default-server-url.com")
     jira_email = os.getenv("JIRA_EMAIL", "default-email@example.com")
     jira_api_token = os.getenv("JIRA_API_TOKEN", "")
-    '''
-    jira_server = st.secrets["JIRA_SERVER"]
-    jira_email = st.secrets["JIRA_EMAIL"]
-    jira_api_token = st.secrets["JIRA_API_TOKEN"]
-     '''
 
     st.sidebar.header("Actions")
     
