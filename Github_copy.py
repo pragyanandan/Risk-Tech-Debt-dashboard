@@ -1,3 +1,4 @@
+
 import streamlit as st
 import pandas as pd
 import plotly.graph_objs as go
@@ -59,7 +60,7 @@ def fetch_jira_issues_and_create_csv(jira_server, jira_email, jira_api_token, fi
             # Define the column headers and field mapping for the CSV file
             columns = [
                 "Key", "Summary", "Primary-Team", "FY-25", "FY-26", "FY-27", "FY-28", "FY-29",
-                "Risk-Impact", "Risk-Likelihood", "risk-exposure-score", "IP-Platform-Scope", "MSI_Covered _Yes_No","Tech-Debt-Type"
+                "Risk-Impact", "Risk-Likelihood", "risk-exposure-score", "IP-Platform-Scope", "MSI_Covered _Yes_No"
             ]
 
             # Create a list of dictionaries to hold the issue data
@@ -79,8 +80,7 @@ def fetch_jira_issues_and_create_csv(jira_server, jira_email, jira_api_token, fi
                     "Risk-Likelihood": getattr(issue.fields, 'customfield_14224', 0),
                     "risk-exposure-score": getattr(issue.fields, 'customfield_14226', 0),
                     "IP-Platform-Scope": getattr(issue.fields, 'customfield_14212', "N/A"),
-                    "MSI_Covered _Yes_No": getattr(issue.fields, 'customfield_14354', "No"),
-                    "Type-Of-Initiative": getattr(issue.fields, 'customfield_14223', "No")
+                    "MSI_Covered _Yes_No": getattr(issue.fields, 'customfield_14354', "No")
                 }
                 # Append the row to the data list
                 data.append(row)
@@ -430,9 +430,6 @@ def main_dashboard():
         ip_platform_filter = st.sidebar.multiselect("IP Platform Scope?", options=df_processed['IP-Platform-Scope'].unique(), default=df_processed['IP-Platform-Scope'].unique())
         msi_covered_filter = st.sidebar.multiselect("Is it part of Accenture Business Case?", options=df_processed['MSI_Covered _Yes_No'].unique(), default=df_processed['MSI_Covered _Yes_No'].unique())
         
-        #Added a new Filter for Nicola's definition of Risks Tech Debt
-        tech_debt_filter = st.sidebar.multiselect("Select Primary Team", options=df_processed['Type-Of-Initiative'].unique(), default=df_processed['Type-Of-Initiative'].unique())
-
         # Add a checkbox toggle to control risk score display
         show_scores = st.sidebar.checkbox("Show Risk Scores", value=True)
 
@@ -440,16 +437,14 @@ def main_dashboard():
         filtered_df = df_processed[
             (df_processed['Primary-Team'].isin(primary_team_filter)) &
             (df_processed['IP-Platform-Scope'].isin(ip_platform_filter)) &
-            (df_processed['MSI_Covered _Yes_No'].isin(msi_covered_filter))&
-            (df_processed['Type-Of-Initiative'].isin(tech_debt_filter))
+            (df_processed['MSI_Covered _Yes_No'].isin(msi_covered_filter))
         ]
 
         # Create a dictionary of applied filters
         applied_filters = {
             "Primary Team": primary_team_filter,
             "IP Platform": ip_platform_filter,
-            "MSI Covered": msi_covered_filter,
-            "Risk-Tech-Type" : tech_debt_filter
+            "MSI Covered": msi_covered_filter
         }
 
         # Generate and plot the risk matrix for filtered data
