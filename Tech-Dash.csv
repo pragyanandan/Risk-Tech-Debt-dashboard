@@ -1,8 +1,8 @@
 Key,Summary,Primary-Team,FY-25,FY-26,FY-27,FY-28,FY-29,Risk-Impact,Risk-Likelihood,risk-exposure-score,IP-Platform-Scope,MSI_Covered _Yes_No,Type-Of-Initiative
-TTRD-315,Media Book SQL Server Upgrade,Application & Support,,,,,,4,4,16.0,No,No,Risk-Tech-Debt_TVNZ
-TTRD-314,Vfire Upgrade,Application & Support,,,,,,4,4,16.0,MayBe,Yes,Risk-Tech-Debt_TVNZ
-TTRD-296,FY25-FY29 Hardware Lifecycle refresh - EUC,Application & Support,1009000.0,1959646.0,1025300.0,470042.0,1380811.0,5,2,10.0,Yes,Yes,Risk-Tech-Debt_TVNZ
-TTRD-123,ScheduALL - Replacement as current system EOS,Application & Support,200000.0,,,,,3,4,12.0,MayBe,No,Risk-Tech-Debt_TVNZ
+TTRD-315,Media Book SQL Server Upgrade,Application & Support,14890.0,,,,,4,4,16.0,No,No,Risk-Tech-Debt_TVNZ
+TTRD-314,Vfire Upgrade,Application & Support,0.0,,,,,4,4,16.0,MayBe,Yes,Risk-Tech-Debt
+TTRD-296,FY25-FY29 Hardware Lifecycle refresh - EUC,Application & Support,645152.0,2323494.0,1025300.0,470042.0,1380811.0,5,2,10.0,Yes,Yes,Risk-Tech-Debt_TVNZ
+TTRD-123,ScheduALL - Replacement as current system EOS,Application & Support,,200000.0,,,,3,4,12.0,MayBe,No,Risk-Tech-Debt_TVNZ
 TTRD-119,Dealnet - Strategical Solution,Application & Support,50000.0,,,,,3,3,9.0,No,No,Risk-Tech-Debt_TVNZ
 TTRD-115,Car Park application solution,Application & Support,,10000.0,,,,2,3,6.0,No,No,Risk-Tech-Debt_TVNZ
 TTRD-566,Consolidate - Video Platforms - BrightCove/Mediakind,Digital-Squads,200000.0,1000000.0,,,,5,5,25.0,Yes,Yes,Risk-Tech-Debt
@@ -42,18 +42,18 @@ TTRD-72,Studio 3 & 4 Control Room rebuilds,Broadcast & Media,,250000.0,250000.0,
 TTRD-70,Studio 4 soft set Videowall + Black Storms,Broadcast & Media,,540000.0,,,,3,5,15.0,Adjacent,No,Risk-Tech-Debt_TVNZ
 TTRD-47,Studio 4 Robotics Camera replacement ,Broadcast & Media,,1000000.0,900000.0,,,3,4,12.0,Adjacent,No,Risk-Tech-Debt_TVNZ
 TTRD-46,Calrec Audio over IP,Broadcast & Media,,,,,,2,1,2.0,Adjacent,No,Risk-Tech-Debt_TVNZ
-TTRD-276,WGN DR Enterprise App migration to Cloud,Infrastructure,,160000.0,,,,3,3,9.0,MayBe,Yes,Risk-Tech-Debt
+TTRD-276,WGN DR Enterprise App migration to Cloud,Infrastructure,,160000.0,,,,3,3,9.0,MayBe,Yes,Risk-Tech-Debt_TVNZ
 TTRD-272,FY25-FY29 - Cyber Security Initiatives,Infrastructure,813551.0,672853.0,438000.0,438000.0,438000.0,4,4,16.0,Yes,Yes,Risk-Tech-Debt
-TTRD-158,Activate Upgrade,Infrastructure,20000.0,,20000.0,,,3,4,12.0,MayBe,Yes,Risk-Tech-Debt_TVNZ
+TTRD-158,Activate Upgrade,Infrastructure,20000.0,,20000.0,,,3,4,12.0,MayBe,Yes,Risk-Tech-Debt
 TTRD-157,EDR (AntiVirus) Software Managed Service,Infrastructure,238062.0,146495.0,,,,4,3,12.0,MayBe,Yes,Risk-Tech-Debt
-TTRD-156,SAN (storage area network) Switch replacement,Infrastructure,185000.0,,,,,4,3,12.0,Yes,Yes,Risk-Tech-Debt
+TTRD-156,SAN (storage area network) Switch replacement,Infrastructure,185000.0,,,,,4,3,12.0,Yes,Yes,Risk-Tech-Debt_TVNZ
 TTRD-155,Windows Desktop SOE Upgrade,Infrastructure,20000.0,,,,,3,4,12.0,Yes,Yes,Risk-Tech-Debt
-TTRD-154,MS Exchange Hybrid Server Upgrade/Re-platform,Infrastructure,120000.0,,,,,3,5,15.0,MayBe,No,Risk-Tech-Debt
+TTRD-154,MS Exchange Hybrid Server Upgrade/Re-platform,Infrastructure,,50000.0,,,,3,5,15.0,MayBe,No,Risk-Tech-Debt
 TTRD-153,Citrix Software Upgrade,Infrastructure,,50000.0,,,,2,3,6.0,Yes,Yes,Risk-Tech-Debt
 TTRD-152,Backup Software Upgrade,Infrastructure,,70000.0,,,,3,3,9.0,Yes,Yes,Risk-Tech-Debt
-TTRD-150,Viz Hardware replacement (IP),Infrastructure,47500.0,49000.0,,,,4,3,12.0,Yes,No,Risk-Tech-Debt
-TTRD-148,FY25-FY29 Hardware Lifecycle - Infra & Networks,Infrastructure,286000.0,558921.0,330210.0,184000.0,535000.0,3,3,9.0,MayBe,Yes,Risk-Tech-Debt
-TTRD-129,Broadcast Network Firewalls replacement (IP Platform),Infrastructure,400000.0,,,,,4,4,16.0,Yes,Yes,Risk-Tech-Debt
-TTRD-118,OS Upgrade and Server virtualisation,Infrastructure,,150000.0,,150000.0,,4,5,20.0,Yes,Yes,Risk-Tech-Debt
-TTRD-109,Network Perimeter Firewalls (IP Platform),Infrastructure,810000.0,,,,,5,4,20.0,Yes,Yes,Risk-Tech-Debt
+TTRD-150,Viz Hardware replacement (IP),Infrastructure,47500.0,49000.0,,,,4,3,12.0,Yes,No,Risk-Tech-Debt_TVNZ
+TTRD-148,FY25-FY29 Hardware Lifecycle - Infra & Networks,Infrastructure,286000.0,558921.0,330210.0,184000.0,535000.0,3,3,9.0,MayBe,Yes,Risk-Tech-Debt_TVNZ
+TTRD-129,Broadcast Network Firewalls replacement (IP Platform),Infrastructure,400000.0,,,,,4,4,16.0,Yes,Yes,Risk-Tech-Debt_TVNZ
+TTRD-118,OS Upgrade and Server virtualisation,Infrastructure,,150000.0,,150000.0,,4,5,20.0,Yes,Yes,Risk-Tech-Debt_TVNZ
+TTRD-109,Network Perimeter Firewalls (IP Platform),Infrastructure,810000.0,,,,,5,4,20.0,Yes,Yes,Risk-Tech-Debt_TVNZ
 TTRD-25,Server Patching - Vulnerability Mgmt,Infrastructure,,160000.0,,,,4,3,12.0,MayBe,Yes,Risk-Tech-Debt

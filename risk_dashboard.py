@@ -26,7 +26,7 @@ def login_screen():
     if st.button("Login"):
         login(username, password)
 
-def fetch_jira_issues_and_create_csv(jira_server, jira_email, jira_api_token, filter_name="Prags-technology-Tech-Debt"):
+def fetch_jira_issues_and_create_csv(jira_server, jira_email, jira_api_token, filter_name="Prags-technology-Tech-Debt-New"):
     """
     Fetch issues from Jira using the specified filter, write the data to a CSV file, 
     and return the data as a Pandas DataFrame.
@@ -35,7 +35,7 @@ def fetch_jira_issues_and_create_csv(jira_server, jira_email, jira_api_token, fi
     - jira_server: Jira server URL
     - jira_email: Jira user email for authentication
     - jira_api_token: Jira API token for authentication
-    - filter_name: Name of the Jira filter to fetch issues (default is "Prags-technology-Tech-Debt")
+    - filter_name: Name of the Jira filter to fetch issues (default is "Prags-technology-Tech-Debt-New")
     
     Returns:
     - DataFrame containing the fetched Jira issues
